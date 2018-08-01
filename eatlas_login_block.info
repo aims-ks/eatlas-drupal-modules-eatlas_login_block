@@ -1,0 +1,14 @@
+; $Id$
+name = eAtlas Login block
+description = [eatlas_login_block] Login block, shown at the bottom of every page of eAtlas website.
+core = 7.x
+
+files[] = eatlas_login_block.module
+
+package = eAtlas
+
+; Attributes used by the update module.
+; There fields needs to be removed if the module is migrated to Drupal.org
+project status url = "http://drupal.eatlas.org.au/modules/eatlas"
+version = "7.x-1.0"
+project = "eatlas_login_block"

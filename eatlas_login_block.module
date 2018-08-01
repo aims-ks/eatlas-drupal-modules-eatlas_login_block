@@ -1,0 +1,44 @@
+<?php
+// hook_block_info
+function eatlas_login_block_block_info() {
+	$blocks['eatlas_login'] = array(
+		'info' => t('eAtlas login'),
+		'cache' => DRUPAL_NO_CACHE,
+	);
+
+	return $blocks;
+}
+
+// hook_block_view
+function eatlas_login_block_block_view($delta = '') {
+	global $user;
+	$block = array();
+
+	switch ($delta) {
+		case 'eatlas_login':
+			// The block do not need a subject (title)
+			// $block['subject'] = t('eAtlas login');
+			$current_path = current_path();
+			if ($current_path != 'user/login') {
+				$current_path_alias = drupal_get_path_alias($current_path);
+				if ($user && $user->uid) {
+					$block['content'] = '<div class="eatlas-logout">' .
+						t('<a href="@userurl">@name</a> - <a href="@url">Logout</a>', array(
+							'@userurl' => url('user/'.$user->uid),
+							'@name' => format_username($user),
+							'@url' => url('user/logout', array('query' => array('destination' => $current_path_alias)))
+						)) .
+						'</div>';
+				} else {
+					$block['content'] = '<div class="eatlas-login">' .
+						t('<a href="@url">Login</a>', array('@url' => url('user/login', array('query' => array('destination' => $current_path_alias))))) .
+						'</div>';
+				}
+			}
+			break;
+	}
+
+	return $block;
+}
+
+?>
